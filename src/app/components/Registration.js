@@ -20,25 +20,29 @@ export class Registration extends React.Component{
         let fields = this.state.fields;
         let errors = {};
         let formIsValid = true;
-
         //Name
-        if(!fields["name"]){
+        if(!fields["name"] || typeof fields["name"] == "undefined" || typeof fields["name"] == undefined){
            formIsValid = false;
            errors["name"] = "Cannot be empty";
         }
 
       //pwd
-        if(!fields["pwd"]){
+        if(!fields["pwd"] || typeof fields["pwd"] == "undefined" || typeof fields["pwd"] == undefined){
                    formIsValid = false;
                    errors["pwd"] = "Cannot be empty";
                 }
 
         //gender
-      if(!fields["gen"]){
-           formIsValid = false;
-           errors["gen"] = "Cannot be empty";
-        } 
-
+        
+        if(!fields["gen"] || typeof fields["gen"] == "undefined" || typeof fields["gen"] == undefined){
+              formIsValid = false;
+              errors["gen"] = "Cannot be empty";
+           }else if(fields["gen"].toUpperCase() == 'MALE' || fields["gen"].toUpperCase() == 'FEMALE' || fields["gen"].toUpperCase() == 'OTHERS'){
+        		 formIsValid = true;
+           }else {
+    	  formIsValid = false;
+          errors["gen"] = "please type male or female or others only";
+      } 
        this.setState({errors: errors});
        return formIsValid;
    }
