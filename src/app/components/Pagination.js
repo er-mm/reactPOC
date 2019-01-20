@@ -8,7 +8,7 @@ export class Pagination extends React.Component {
         super();
         this.state = {
              currentPage: 1,
-          todosPerPage: 2
+          todosPerPage: 25
         };
         this.handleClick = this.handleClick.bind(this);
       }
