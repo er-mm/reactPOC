@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import fetch from 'isomorphic-fetch';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+//import { Submit } from "./Submit";
 
 export class Registration extends React.Component{
 
@@ -10,7 +11,8 @@ export class Registration extends React.Component{
         //this.age = props.age;
         this.state={
             fields: {},
-           errors: {}
+           errors: {},
+           flag:false
         }
     }
 
@@ -62,17 +64,19 @@ export class Registration extends React.Component{
      myFunc(e){
          e.preventDefault();
         if(this.handleValidation()){
-        var uname = document.getElementById("uname").value;
-        var pwd = document.getElementById("pwd").value;
-        var gender = document.getElementById("gen").value;
-        
-    
+        	let fields = this.state.fields;
+      //  var uname = document.getElementById("uname").value;
+       // var pwd = document.getElementById("pwd").value;
+        //var gender = document.getElementById("gen").value;
+        	var uname = fields["name"];
+        	var pwd = fields["pwd"];
+        	var gender = fields["gen"].toUpperCase();
         var data = {
             "userName" : uname,
             "password" : pwd,
             "gender" : gender
         };
-       
+      
         fetch('http://api.prontoitlabs.com/api/v1/user', {
             method: 'POST',
            mode: 'no-cors',
@@ -95,14 +99,18 @@ export class Registration extends React.Component{
         document.getElementById("uname").value = '';
         document.getElementById("pwd").value = '';
         document.getElementById("gen").value = '';
-
+        this.setState({flag: true});
         }
     }   
     render(){
-       
+    	 let { flag } = this.state;
+    	 /*{flag ?
+       		   <Submit/>
+       		   :*/
         return(
             <div className="container">
-            
+           
+         			   <div className="container">
                 <h1 align="center">Create Account</h1>
                 <form className="table p-3 mb-2 bg-light text-dark">
                 <div className="form-group">
@@ -123,10 +131,12 @@ export class Registration extends React.Component{
                     </div>
                     
                     
-                    <button to="/registerUser" type="button" className="btn btn-primary" onClick={this.myFunc.bind(this)}>Submit Details</button>
+                    <button to="/" type="button" className="btn btn-primary" onClick={this.myFunc.bind(this)}>Submit Details</button>
                 </form>
                 <span style={{color: "red"}}>{this.state.errors["register"]}</span>
                 <span style={{color: "green"}}>{this.state.errors["success"]}</span>
+                </div>
+          
             </div>
         );
     }

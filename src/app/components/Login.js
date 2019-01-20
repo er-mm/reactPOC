@@ -107,9 +107,11 @@ export class Login extends React.Component{
      myFunc(e){
          e.preventDefault();
         if(this.handleValidation()){
-        var uname = document.getElementById("uname").value;
-        var pwd = document.getElementById("pwd").value;
-
+        	let fields = this.state.fields;
+      //  var uname = document.getElementById("uname").value;
+       // var pwd = document.getElementById("pwd").value;
+        	var uname = fields["name"];
+        	var pwd = fields["pwd"];
         var data = {
             "userName" : uname,
             "password" : pwd,
@@ -173,7 +175,7 @@ export class Login extends React.Component{
            {flag ?
         		   <AllData found={cookie}/>
         		   :
-        			   <div>
+        			   <div className="container">
            <h1 align="center">Login Account</h1>
            <form className="table p-3 mb-2 bg-light text-dark">
            <div className="form-group">
